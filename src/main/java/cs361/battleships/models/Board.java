@@ -20,7 +20,7 @@ public class Board
 		//WARNING: PSEUDO CODE, WILL NOT WORK
 		for(i=1; i <= 10; i++)
 		{
-			for (j=65; j <= 74; i++)
+			for (j=65; j <= 74; j++)
 			{
 				s = new Square(i, (char)j);
 				field.add(s);
