@@ -17,13 +17,13 @@ public class Board
 		field = new ArrayList<>(100);
 
 		//WARNING: PSEUDO CODE, WILL NOT WORK
-		for(i=1; i < 10; i++)
+		/*zfor(int i=1; i < 10; i++)
 		{
-			for (j='A'; j < 'J'; i++)
+			for (int j='A'; j < 'J'; i++)
 			{
 				field.add(square(i, j));
 			}
-		}
+		}*/
 	}
 
 	/*
