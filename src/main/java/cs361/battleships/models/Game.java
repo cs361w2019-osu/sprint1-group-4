@@ -12,8 +12,7 @@ public class Game {
 
     @JsonProperty private Board playersBoard = new Board();
     @JsonProperty private Board opponentsBoard = new Board();
-
-    private Square s = new Square();
+    
     private Random rnd = new Random();
 
     /*
@@ -52,13 +51,13 @@ public class Game {
 
         return true;
     }
-    
+
     private char randCol() {
-        return (char) (rnd.nextInt(s.getColumn()) + 'A');
+        return (char) (rnd.nextInt(74) + 65);
     }
 
     private int randRow() {
-        return rnd.nextInt(s.getRow()) + 1;
+        return rnd.nextInt(10) + 1;
     }
 
     private boolean randVertical() {
