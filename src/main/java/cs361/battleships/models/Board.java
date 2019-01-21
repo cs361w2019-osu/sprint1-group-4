@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Board
 {
+    private Square s;
     private List<Square> field;
 	/*
 	DO NOT change the signature of this method. It is used by the grading scripts.
@@ -17,11 +18,12 @@ public class Board
 		field = new ArrayList<>(100);
 
 		//WARNING: PSEUDO CODE, WILL NOT WORK
-		for(i=1; i < 10; i++)
+		for(i=1; i <= 10; i++)
 		{
-			for (j='A'; j < 'J'; i++)
+			for (j=65; j <= 74; i++)
 			{
-				field.add(square(i, j));
+				s = new Square(i, (char)j);
+				field.add(s);
 			}
 		}
 	}
