@@ -12,7 +12,7 @@ public class Game {
 
     @JsonProperty private Board playersBoard = new Board();
     @JsonProperty private Board opponentsBoard = new Board();
-    
+
     private Random rnd = new Random();
 
     /*
@@ -53,7 +53,7 @@ public class Game {
     }
 
     private char randCol() {
-        return (char) (rnd.nextInt(74) + 65);
+        return (char) (rnd.nextInt((74 - 65) + 1) + 65);
     }
 
     private int randRow() {
