@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static cs361.battleships.models.AtackStatus.*;
 
@@ -11,6 +12,8 @@ public class Game {
 
     @JsonProperty private Board playersBoard = new Board();
     @JsonProperty private Board opponentsBoard = new Board();
+
+    private Random rnd = new Random();
 
     /*
 	DO NOT change the signature of this method. It is used by the grading scripts.
@@ -52,7 +55,7 @@ public class Game {
 
     private char randCol() {
         int X = (int)(Math.random() * 9 + 0);
-        X + X +64;
+        X = X + 64;
         return 'X';
     }
 

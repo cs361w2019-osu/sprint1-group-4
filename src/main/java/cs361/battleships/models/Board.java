@@ -7,21 +7,26 @@ import java.util.List;
 
 public class Board
 {
+    private Square s;
     private List<Square> field;
 	/*
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
+
+	//Board constructor
 	public Board()
 	{
 		// TODO Implement
+		/*
 		field = new ArrayList<>(100);
 
 		//WARNING: PSEUDO CODE, WILL NOT WORK
-		/*zfor(int i=1; i < 10; i++)
+		/*for(int i=1; i <= 10; i++)
 		{
-			for (int j='A'; j < 'J'; i++)
+			for (int j='A'; j <= 'J'; j++)
 			{
-				field.add(square(i, j));
+				s = new Square(i, (char)j);
+				field.add(s);
 			}
 		}*/
 	}
@@ -46,8 +51,30 @@ public class Board
 	 */
 	public Result attack(int x, char y)
 	{
+		AtackStatus a1 = AtackStatus.MISS;
+		System.out.println(a1);
 		//TODO Implement
         //if getloctaion is the same as x and y then we hit?
+		/*Occupied - F    Attack - T, The attack position is not occupied
+		MISS,
+
+
+
+		//Occupied - T    Attack - T, The attack position is occupied
+		HIT,
+
+		//All of the hit match the occupation of one ship
+		SUNK,
+
+		//All of the place the ship occupied is fill with hit
+		SURRENDER,
+
+		//Attack coordinate is out of array bound (input validation to enter again?)
+		INVALID,
+
+		*/
+
+
 		return null;
 	}
 
@@ -65,12 +92,17 @@ public class Board
 
 	public List<Result> getAttacks()
 	{
+
 		//TODO implement
+		//List of type of attack
+		//return attack coordinate?
 		return null;
 	}
 
 	public void setAttacks(List<Result> attacks)
 	{
+		//setting the result of attacks
+		//this.attack = attacks
 		//TODO implement
 	}
 }
