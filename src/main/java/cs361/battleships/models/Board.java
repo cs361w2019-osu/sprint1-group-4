@@ -21,15 +21,14 @@ public class Board
 		field = new ArrayList<>(100);
 
 		//WARNING: PSEUDO CODE, WILL NOT WORK
-		for(i=1; i <= 10; i++)
+		/*for(int i=1; i <= 10; i++)
 		{
-			for (j=65; j <= 74; j++)
+			for (int j='A'; j <= 'J'; j++)
 			{
 				s = new Square(i, (char)j);
 				field.add(s);
 			}
-		}
-		*/
+		}*/
 	}
 
 	/*

@@ -52,15 +52,20 @@ public class Game {
         return true;
     }
 
+
     private char randCol() {
-        return (char) (rnd.nextInt((74 - 65) + 1) + 65);
+        int X = (int)(Math.random() * 9 + 0);
+        X = X + 64;
+        return 'X';
     }
 
     private int randRow() {
-        return rnd.nextInt(10) + 1;
+        int Y = (int)(Math.random() * 9 + 0);
+        return Y;
     }
 
     private boolean randVertical() {
-        return rnd.nextBoolean();
+        int B = (int)(Math.random() * 1 + 0);
+        return B;
     }
 }
