@@ -52,12 +52,12 @@ public class Game {
 
     private char randCol() {
         int X = (int)(Math.random() * 9 + 0);
+        X + X +64;
         return 'X';
     }
 
     private int randRow() {
         int Y = (int)(Math.random() * 9 + 0);
-        Y = Y + 64;
         return Y;
     }
 
