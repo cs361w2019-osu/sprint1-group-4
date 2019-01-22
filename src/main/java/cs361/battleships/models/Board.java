@@ -9,6 +9,7 @@ public class Board
 {
     private Square s;
     private List<Square> field;
+
 	/*
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
@@ -51,10 +52,14 @@ public class Board
 	 */
 	public Result attack(int x, char y)
 	{
+
+
 		AtackStatus a1 = AtackStatus.MISS;
 		System.out.println(a1);
+
+
 		//TODO Implement
-        //if getloctaion is the same as x and y then we hit?
+        //if occupied location is not same as attack
 		/*Occupied - F    Attack - T, The attack position is not occupied
 		MISS,
 
@@ -62,15 +67,37 @@ public class Board
 
 		//Occupied - T    Attack - T, The attack position is occupied
 		HIT,
+		Find the ship being attack by coordinate, identify it name
+		Deduct the ship health by 1
+		FUNCTION BEING USE:
+		getsName
+		shipDamage
+		getsHealth
+		set the square value
+
+
 
 		//All of the hit match the occupation of one ship
 		SUNK,
+		Check the health of the 3 ship, if one of the health fall to 0 then it sunk
+		FUNCTION BEING USE:
+		getsName (of the sunk ship)
+		shipDamage
+		getsHealth
+
+
 
 		//All of the place the ship occupied is fill with hit
 		SURRENDER,
+		Player or opponent overall health deduct to 0 then it sunk
+
+
 
 		//Attack coordinate is out of array bound (input validation to enter again?)
 		INVALID,
+		Check if coordinate is out of bound, then player have to enter again
+		Ex: 0 < x < sizeOfBoard and
+		    0 < y < sizeOfBoard
 
 		*/
 
@@ -87,6 +114,8 @@ public class Board
 
 	public void setShips(List<Ship> ships)
 	{
+
+		//Still not figure out what is this function do!
 		//TODO implement
 	}
 
@@ -96,12 +125,16 @@ public class Board
 		//TODO implement
 		//List of type of attack
 		//return attack coordinate?
+
+		//return attacks
 		return null;
 	}
 
 	public void setAttacks(List<Result> attacks)
 	{
-		//setting the result of attacks
+
+
+		//setting the result of attacks: HIT, MISS, SURRENDER, INVALID, SUNK
 		//this.attack = attacks
 		//TODO implement
 	}
