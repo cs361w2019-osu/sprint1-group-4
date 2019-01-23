@@ -51,6 +51,7 @@ public class Game {
         return true;
     }
 
+
     private char randCol() {
         return (char)(rnd.nextInt(10) + 65);
     }

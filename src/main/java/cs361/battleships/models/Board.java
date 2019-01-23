@@ -14,6 +14,8 @@ public class Board
 	/*
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
+
+	//Board constructor
 	public Board()
 	{
 		this.totalShips = new ArrayList<>();
