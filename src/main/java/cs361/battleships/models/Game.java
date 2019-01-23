@@ -22,7 +22,6 @@ public class Game {
         boolean successful = playersBoard.placeShip(ship, x, y, isVertical);
         if (!successful)
             return false;
-
         boolean opponentPlacedSuccessfully;
         do {
             // AI places random ships, so it might try and place overlapping ships
@@ -54,18 +53,14 @@ public class Game {
 
 
     private char randCol() {
-        int X = (int)(Math.random() * 9 + 0);
-        X = X + 64;
-        return 'X';
+        return (char)(rnd.nextInt(10) + 65);
     }
 
     private int randRow() {
-        int Y = (int)(Math.random() * 9 + 0);
-        return Y;
+        return rnd.nextInt(10) + 1;
     }
 
     private boolean randVertical() {
-        int B = (int)(Math.random() * 1 + 0);
-        return B;
+        return rnd.nextBoolean();
     }
 }
