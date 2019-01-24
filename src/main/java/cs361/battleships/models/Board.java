@@ -9,53 +9,87 @@ public class Board
 {
 	private List<Ship> totalShips;
 	private List<Result> totalAtacks;
-	private int surr;
+	private boolean[][] boardLayout;	// for identifying occupied spaces
+	final int BOARDX = 10,
+			  BOARDY = BOARDX;
 
 	/*
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
-
-	//Board constructor
 	public Board()
 	{
-		this.totalShips = new ArrayList<>();
-		this.totalAtacks = new ArrayList<>();
+		totalShips = new ArrayList();
+		totalAtacks = new ArrayList();
+		boardLayout = new boolean[BOARDX][BOARDY];
+		// setting up the board as a blank slate
+		for (int i = 0; i < BOARDX; i++) {
+			for (int j = 0; j < BOARDY; j++) {
+				boardLayout[i][j] = false;
+			}
+		}
 	}
 
 	/*
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
-	//this function almost works, only able to place one ship in the game though
 	public boolean placeShip(Ship ship, int x, char y, boolean isVertical)
 	{
-		int xoff; //integer to check offset from clickpoint, x-axis
-		char yoff; //char to check offset from clickpoint, y-axis
+		// TODO Implement
+		Square s;
+		int xoff;
+		char yoff;
 
-		//if the ship is vertical do this
-		if(isVertical)
-        {
-            xoff = x + ship.getSize();
-            yoff = y;
-        }
-		//if it isn't, do this
-		else
-        {
-            xoff = x;
-            yoff = (char)((int)y + ship.getSize());
-        }
-
-		//if the ship is within the bounds of the grid add it
-		if ((xoff > 0 && xoff < 12) && (yoff >= 'A' && yoff <='K'))
-		{
-			ship.setOccupiedSquares(x, y, isVertical);
-			this.totalShips.add(ship);
-			return true;
+		for(Ship sType: totalShips) {
+			if(sType.getsName().equals(ship.getsName())) {
+				return false;
+			} else if ((x < 0 || x > 10) || (y < 'A' || y > 'J')) {
+				return false;
+			}
 		}
-		//otherwise return false
-		else
-        {
-            return false;
-        }
+
+		if(isVertical) {
+			for (int i = 0; i < ship.getSize(); i++) {
+				s = new Square((x + i), y);
+				if ((x + i) < 1 || (x + 1) > 10) {
+					return false;
+				} else if (getBoardLayout(x,y) == true) {
+					return false;
+				} else {
+					ship.setOccupiedSquares(s);
+					setBoardLayout(x,y,true);
+				}
+			}
+		} else {
+			for(int i = 0; i < ship.getSize(); i++)
+			{
+				if ((char)((int)y+i) > 'A' || (char)((int)y+i) < 'J') {
+					return false;
+				} else if (getBoardLayout(x,y) == true) {
+					return false;
+				}
+				else {
+					s = new Square(x, (char)((int)y+i));
+					ship.setOccupiedSquares(s);
+					setBoardLayout(x,y,true);
+
+				}
+			}
+		}
+
+
+
+		for(int i = 0; i < ship.getOccupiedSquares().size(); i++)
+		{
+			xoff = ship.getOccupiedSquares().get(i).getRow();
+			yoff = ship.getOccupiedSquares().get(i).getColumn();
+
+			if((xoff > 0 && xoff < 11) && (yoff >= 'A' && yoff <= 'J'))
+			{
+				totalShips.add(ship);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/*
@@ -63,39 +97,31 @@ public class Board
 	 */
 	public Result attack(int x, char y)
 	{
-		//new result object to set the state of a square
+		//TODO Implement
 		Result r = new Result();
-		//setup attack square to compare things against
 		Square s = new Square(x, y);
 		r.setLocation(s);
 
-		//if the mouse click is within the borders do this
 		if((x > 0 && x < 11) &&(y >= 'A' && y <= 'J'))
 		{
-			//check all the ships
 			for(Ship ship : totalShips)
 			{
-				//check all the squares within all the ships occupied squares
 				for (Square square : ship.getOccupiedSquares())
 				{
-					//if the mouse click matches with a square then do this
 					if(square.getRow() == x && square.getColumn() == y)
 					{
-						//set attack status to hit
 						r.setResult(AtackStatus.HIT);
 						ship.setsHealth();
 						if(ship.getsHealth() == 0)
 						{
 							r.setResult(AtackStatus.SUNK);
-							//temporary implementation of surrender mechanic
-							surr++;
-							if(surr == 3)
+							r.setShip(new Ship(ship.getsName()));
+							if(r.getShipCount() == 3)
 							{
 								r.setResult(AtackStatus.SURRENDER);
 							}
 						}
 					}
-					//if we cant find a matching set of squares it will be a miss
 					else
 					{
 						r.setResult(AtackStatus.MISS);
@@ -103,47 +129,55 @@ public class Board
 				}
 			}
 		}
-		//if the mouse is not within the borders do this
 		else
 		{
 			r.setResult(AtackStatus.INVALID);
 		}
 
-		//this block is to check to see if a square has already been clicked by the user
 		if(totalAtacks.isEmpty())
-		{
-			totalAtacks.add(r);
-		}
+        {
+            totalAtacks.add(r);
+        }
 		else {
-			//check if the user has already clicked that square
-			for (int i = 0; i < totalAtacks.size(); i++) {
-				if (totalAtacks.get(i).getLocation() == r.getLocation()) {
-					r.setResult(AtackStatus.INVALID);
-				}
-			}
-		}
+            for (int i = 0; i < totalAtacks.size(); i++) {
+                if (totalAtacks.get(i).getLocation() == r.getLocation()) {
+                    r.setResult(AtackStatus.INVALID);
+                }
+            }
+        }
 		totalAtacks.add(r);
 
 		return r;
 	}
 
+	public boolean getBoardLayout(int xCoo, int yCoo) {
+		return boardLayout[xCoo][yCoo];
+	}
+	public void setBoardLayout(int xCoo, int yCoo, boolean state) {
+		boardLayout[xCoo][yCoo] = state;
+	}
+
 	public List<Ship> getShips()
 	{
+		//TODO implement
 		return this.totalShips;
 	}
 
 	public void setShips(List<Ship> ships)
 	{
+		//TODO implement
 		this.totalShips = ships;
 	}
 
 	public List<Result> getAttacks()
 	{
+		//TODO implement
 		return this.totalAtacks;
 	}
 
 	public void setAttacks(List<Result> attacks)
 	{
+		//TODO implement
 		this.totalAtacks = attacks;
 	}
 }
