@@ -13,8 +13,6 @@ public class Game {
     @JsonProperty private Board playersBoard = new Board();
     @JsonProperty private Board opponentsBoard = new Board();
 
-    private Random rnd = new Random();
-
     /*
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
@@ -22,6 +20,7 @@ public class Game {
         boolean successful = playersBoard.placeShip(ship, x, y, isVertical);
         if (!successful)
             return false;
+
         boolean opponentPlacedSuccessfully;
         do {
             // AI places random ships, so it might try and place overlapping ships
@@ -46,21 +45,21 @@ public class Game {
             // AI does random attacks, so it might attack the same spot twice
             // let it try until it gets it right
             opponentAttackResult = playersBoard.attack(randRow(), randCol());
-        } while(opponentAttackResult.getResult() != INVALID);
+        } while(opponentAttackResult.getResult() == INVALID);
 
         return true;
     }
 
-
     private char randCol() {
-        return (char)(rnd.nextInt(10) + 65);
+        int random = new Random().nextInt(10);
+        return (char) ('A' + random);
     }
 
     private int randRow() {
-        return rnd.nextInt(10) + 1;
+        return  new Random().nextInt(10) + 1;
     }
 
     private boolean randVertical() {
-        return rnd.nextBoolean();
+        return new Random().nextBoolean();
     }
 }
