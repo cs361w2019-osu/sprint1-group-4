@@ -39,3 +39,45 @@ td:hover {
 .miss {
     background-color: blue;
 }
+
+#start_button
+{
+    border-radius: 9px;
+    background-color: #4CAF50;
+    color: black;
+    padding: 24px 24px;
+    text-align: center;
+    font-size: 20px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+}
+
+#start_button .start_reset
+{
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    transition: 0.5s;
+}
+
+#start_button .start_reset:after
+{
+    content: '!!';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -10px;
+    transition: 0.5s;
+}
+
+#start_button:hover span
+{
+    padding-right: 15px;
+}
+
+#start_button:hover span:after
+{
+    opacity: 1;
+    right: 0;
+}
