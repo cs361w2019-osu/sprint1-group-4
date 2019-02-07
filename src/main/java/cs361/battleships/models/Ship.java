@@ -1,117 +1,80 @@
 package cs361.battleships.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.common.collect.Sets;
-import com.mchange.v1.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 public class Ship {
 
-	@JsonProperty private String kind;
-	@JsonProperty private List<Square> occupiedSquares;
-	@JsonProperty private int size;
+    String sName;
+    int sHealth, sLength;
 
-	public Ship() {
-		occupiedSquares = new ArrayList<>();
-	}
-	
-	public Ship(String kind) {
-		this();
-		this.kind = kind;
-		switch(kind) {
-			case "MINESWEEPER":
-				size = 2;
-				break;
-			case "DESTROYER":
-				size = 3;
-				break;
-			case "BATTLESHIP":
-				size = 4;
-				break;
-		}
-	}
+    @JsonProperty
+    private List<Square> occupiedSquares;
 
-	public List<Square> getOccupiedSquares() {
-		return occupiedSquares;
-	}
+    public Ship() {
+        this.occupiedSquares = new ArrayList<>();
+        this.sLength = 0;
+    }
 
-	public void place(char col, int row, boolean isVertical) {
-		for (int i=0; i<size; i++) {
-			if (isVertical) {
-				occupiedSquares.add(new Square(row+i, col));
-			} else {
-				occupiedSquares.add(new Square(row, (char) (col + i)));
-			}
-		}
-	}
+    public Ship(String kind) {
+        this.sLength = 0;
 
-	public boolean overlaps(Ship other) {
-		Set<Square> thisSquares = Set.copyOf(getOccupiedSquares());
-		Set<Square> otherSquares = Set.copyOf(other.getOccupiedSquares());
-		Sets.SetView<Square> intersection = Sets.intersection(thisSquares, otherSquares);
-		return intersection.size() != 0;
-	}
+        if (kind.equals("MINESWEEPER")) {
+            sName = "MINESWEEPER";
+            sLength = 2;
+            sHealth = 2;
+        } else if (kind.equals("BATTLESHIP")) {
+            sName = "BATTLESHIP";
+            sLength = 4;
+            sHealth = 4;
+        } else if (kind.equals("DESTROYER")) {
+            sName = "DESTROYER";
+            sLength = 3;
+            sHealth = 3;
+        }
+        this.occupiedSquares = new ArrayList<>();
+    }
 
-	public boolean isAtLocation(Square location) {
-		return getOccupiedSquares().stream().anyMatch(s -> s.equals(location));
-	}
 
-	public String getKind() {
-		return kind;
-	}
+    public List<Square> getOccupiedSquares() {
+        return this.occupiedSquares;
+    }
 
-	public Result attack(int x, char y) {
-		var attackedLocation = new Square(x, y);
-		var square = getOccupiedSquares().stream().filter(s -> s.equals(attackedLocation)).findFirst();
-		if (!square.isPresent()) {
-			return new Result(attackedLocation);
-		}
-		var attackedSquare = square.get();
-		if (attackedSquare.isHit()) {
-			var result = new Result(attackedLocation);
-			result.setResult(AtackStatus.INVALID);
-			return result;
-		}
-		attackedSquare.hit();
-		var result = new Result(attackedLocation);
-		result.setShip(this);
-		if (isSunk()) {
-			result.setResult(AtackStatus.SUNK);
-		} else {
-			result.setResult(AtackStatus.HIT);
-		}
-		return result;
-	}
+    //old method for getting occupied squares
+    /*public void setOccupiedSquares(Square nums) {
+        this.occupiedSquares.add(nums);
+    }*/
 
-	@JsonIgnore
-	public boolean isSunk() {
-		return getOccupiedSquares().stream().allMatch(s -> s.isHit());
-	}
+    public void setsHealth() {
+        sHealth--;
+    }
 
-	@Override
-	public boolean equals(Object other) {
-		if (!(other instanceof Ship)) {
-			return false;
-		}
-		var otherShip = (Ship) other;
+    public int getsHealth() {
+        return sHealth;
+    }
 
-		return this.kind.equals(otherShip.kind)
-				&& this.size == otherShip.size
-				&& this.occupiedSquares.equals(otherShip.occupiedSquares);
-	}
+    public int getSize() {
+        return sLength;
+    }
 
-	@Override
-	public int hashCode() {
-		return 33 * kind.hashCode() + 23 * size + 17 * occupiedSquares.hashCode();
-	}
+    public String getsName() {
+        return sName;
+    }
 
-	@Override
-	public String toString() {
-		return kind + occupiedSquares.toString();
-	}
+    //new attempt to set up occupied spaces
+    public void setOccupiedSquares(int x, char y, boolean isVertical) {
+        for(int i = 0; i < this.sLength; i++)
+        {
+            if(isVertical)
+            {
+                this.occupiedSquares.add(new Square(x+i, y));
+            }
+            else
+            {
+                this.occupiedSquares.add(new Square(x, (char)((int)y+i)));
+            }
+        }
+    }
 }
