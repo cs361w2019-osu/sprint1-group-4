@@ -15,7 +15,14 @@ public class Counter{
 
     // increment the counter by 1
     public void increment() {
-        if (count < maxCount) count++;
+        if (count < maxCount) {
+            count++;
+        }
+    }
+
+    public void setCount(int count){
+
+        this.count = count;
     }
 
     // return the current count
