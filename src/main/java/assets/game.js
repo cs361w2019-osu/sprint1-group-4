@@ -52,6 +52,15 @@ function registerCellListener(f) {
     let el = document.getElementById("player");
     for (i=0; i<10; i++) {
         for (j=0; j<10; j++) {
+
+
+
+
+            //Insert if-statement marking whether the mouse is over the player's or the opponents grid.
+            //If it is over the opponents grid it should not high light the spaces during the start phase and should not highlight
+            //the player's grid if during the game-play phase.
+
+
             let cell = el.rows[i].cells[j];
             cell.removeEventListener("mouseover", oldListener);
             cell.removeEventListener("mouseout", oldListener);
@@ -61,6 +70,8 @@ function registerCellListener(f) {
     }
     oldListener = f;
 }
+
+
 
 function cellClick() {
     let row = this.parentNode.rowIndex + 1;
@@ -76,6 +87,12 @@ function cellClick() {
             }
         });
     } else {
+
+
+        //insert if statement if on player's grid, cannot attack. If not on players grid do not attack.
+        //The best way to do this would be to eliminate the highlight section function on the player's grid
+        //after the start phase.
+
         sendXhr("POST", "/attack", {game: game, x: row, y: col}, function(data) {
             game = data;
             redrawGrid();
