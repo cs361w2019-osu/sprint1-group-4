@@ -1,40 +1,39 @@
 package cs361.battleships.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Result {
-	private Square s = new Square();
-	private AtackStatus res;
-	private Ship newship = new Ship();
-	private int shipCount;
+
+	@JsonProperty private AtackStatus result;
+	@JsonProperty private Square location;
+	@JsonProperty private Ship ship;
+
+	@SuppressWarnings("unused")
+	public Result() {
+	}
+
+	public Result(Square location) {
+		result = AtackStatus.MISS;
+		this.location = location;
+	}
 
 	public AtackStatus getResult() {
-		return this.res;
+		return result;
 	}
 
 	public void setResult(AtackStatus result) {
-		this.res = result;
+		this.result = result;
 	}
 
 	public Ship getShip() {
-		return this.newship;
+		return ship;
 	}
 
 	public void setShip(Ship ship) {
-		//TODO implement
-		shipCount++;
-		this.newship = ship;
+		this.ship = ship;
 	}
 
-	public Square getLocation()
-	{
-		return this.s;
-	}
-
-	public void setLocation(Square square) {
-		this.s = square;
-	}
-
-	public int getShipCount()
-	{
-		return shipCount;
+	public Square getLocation() {
+		return location;
 	}
 }
