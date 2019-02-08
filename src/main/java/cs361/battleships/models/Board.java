@@ -10,7 +10,21 @@ public class Board {
 
 	@JsonProperty private List<Ship> ships;
 	@JsonProperty private List<Result> attacks;
+	Counter RoundCount = new Counter("Round", 100);
+	Counter BoatCount = new Counter("Boat", 3);
 
+	public void IncCounter() {
+
+		System.out.printf("Current round: " + RoundCount.value() + "\n");
+		int NewRound = RoundCount.value();
+		NewRound++;
+		RoundCount.setCount(NewRound);
+
+
+		System.out.printf("Boat round: " + BoatCount.value() + "\n");
+		BoatCount.increment();
+
+	}
 	/*
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
@@ -51,6 +65,7 @@ public class Board {
 	}
 
 	private Result attack(Square s) {
+		IncCounter();
 		if (attacks.stream().anyMatch(r -> r.getLocation().equals(s))) {
 			var attackResult = new Result(s);
 			attackResult.setResult(AtackStatus.INVALID);

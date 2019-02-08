@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
+
 
 import static cs361.battleships.models.AtackStatus.*;
 
@@ -12,6 +14,7 @@ public class Game {
 
     @JsonProperty private Board playersBoard = new Board();
     @JsonProperty private Board opponentsBoard = new Board();
+
 
     /*
 	DO NOT change the signature of this method. It is used by the grading scripts.
@@ -62,4 +65,30 @@ public class Game {
     private boolean randVertical() {
         return new Random().nextBoolean();
     }
+
+
+    public void GameCounter(){
+
+        System.out.print("Enter type of counter: ");
+        Scanner scanner = new Scanner(System. in);
+        String CounterName = scanner. nextLine();
+        System.out.println("Name of counter is : \n"+CounterName);
+
+        Scanner reader = new Scanner(System.in);  // Reading from System.in
+        System.out.println("Enter max of the counter: ");
+        int max = reader.nextInt(); // Scans the next token of the input as an int once finished
+
+        Counter RoundCounter = new Counter(CounterName,max);
+
+
+        // printing
+        RoundCounter.toString();
+        for (int i = 0; i < max; i++) {
+
+            RoundCounter.increment();
+            System.out.println("Current value: " + RoundCounter.value());
+
+        }
+    }
+
 }
