@@ -70,10 +70,6 @@ function cellClick() {
             game = data;
             redrawGrid();
             placedShips++;
-            if (placedShips == 3) {
-                isSetup = false;
-                registerCellListener((e) => {});
-            }
         });
     } else {
         sendXhr("POST", "/attack", {game: game, x: row, y: col}, function(data) {
@@ -130,14 +126,33 @@ function initGame() {
     document.getElementById("place_minesweeper").addEventListener("click", function(e) {
         shipType = "MINESWEEPER";
        registerCellListener(place(2));
+       document.getElementById('rm1').remove();
+       this.remove();
     });
     document.getElementById("place_destroyer").addEventListener("click", function(e) {
         shipType = "DESTROYER";
        registerCellListener(place(3));
+       document.getElementById('rm2').remove();
+       this.remove();
     });
     document.getElementById("place_battleship").addEventListener("click", function(e) {
         shipType = "BATTLESHIP";
        registerCellListener(place(4));
+       document.getElementById('rm3').remove();
+       this.remove();
+    });
+
+
+    document.getElementById("start_button").addEventListener("click", function(e) {
+        if(placedShips < 3)
+        {
+            alert("Please place all 3 ships before starting the game");
+        }
+        else
+        {
+            isSetup = false;
+            registerCellListener((e) => {});
+        }
     });
     sendXhr("GET", "/game", {}, function(data) {
         game = data;
