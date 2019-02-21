@@ -70,7 +70,8 @@ public class Game {
         opponentsBoard.sonar(x+1, (char)(y-1));
         opponentsBoard.sonar(x-1, (char)(y+1));
         opponentsBoard.sonar(x-1, (char)(y-1));
-        return true; //always return true because we don't care if the player uses it out of bounds or on something else
+        return true; //always return true because we don't care if the player uses it out of bounds
+                     //or on an already clicked square
     }
 
 
