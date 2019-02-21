@@ -35,4 +35,24 @@ public class ShipTest
 
         assertTrue(mine.overlaps(dest));
     }
+
+    @Test
+    public void testHitSonarHit()
+    {
+        Ship mine = new Ship("MINESWEEPER");
+        mine.place('A', 4, false);
+        Result r = mine.sonarHit(4, 'A');
+
+        assertEquals(AtackStatus.HIT, r.getResult());
+    }
+
+    @Test
+    public void testMissSonarHit()
+    {
+        Ship mine = new Ship("MINESWEEPER");
+        mine.place('A', 4, false);
+        Result r = mine.sonarHit(5, 'A');
+
+        assertEquals(AtackStatus.MISS, r.getResult());
+    }
 }
