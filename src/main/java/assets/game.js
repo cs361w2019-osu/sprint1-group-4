@@ -4,10 +4,13 @@ var game;
 var shipType;
 var vertical;
 
-function makeGrid(table, isPlayer) {
-    for (i=0; i<10; i++) {
+function makeGrid(table, isPlayer)
+{
+    for (i=0; i<10; i++)
+    {
         let row = document.createElement('tr');
-        for (j=0; j<10; j++) {
+        for (j=0; j<10; j++)
+        {
             let column = document.createElement('td');
             column.addEventListener("click", cellClick);
             row.appendChild(column);
@@ -75,7 +78,7 @@ function cellClick() {
         sendXhr("POST", "/attack", {game: game, x: row, y: col}, function(data) {
             game = data;
             redrawGrid();
-        })
+        });
     }
 }
 
@@ -99,19 +102,24 @@ function place(size) {
         let col = this.cellIndex;
         vertical = document.getElementById("is_vertical").checked;
         let table = document.getElementById("player");
-        for (let i=0; i<size; i++) {
+        for (let i=0; i<size; i++)
+        {
             let cell;
-            if(vertical) {
+            if(vertical)
+            {
                 let tableRow = table.rows[row+i];
-                if (tableRow === undefined) {
+                if (tableRow === undefined)
+                {
                     // ship is over the edge; let the back end deal with it
                     break;
                 }
                 cell = tableRow.cells[col];
-            } else {
+            } else
+            {
                 cell = table.rows[row].cells[col+i];
             }
-            if (cell === undefined) {
+            if (cell === undefined)
+            {
                 // ship is over the edge; let the back end deal with it
                 break;
             }
@@ -123,25 +131,28 @@ function place(size) {
 function initGame() {
     makeGrid(document.getElementById("opponent"), false);
     makeGrid(document.getElementById("player"), true);
+
     document.getElementById("place_minesweeper").addEventListener("click", function(e) {
-        shipType = "MINESWEEPER";
+       shipType = "MINESWEEPER";
        registerCellListener(place(2));
        document.getElementById('rm1').remove();
        this.remove();
     });
     document.getElementById("place_destroyer").addEventListener("click", function(e) {
-        shipType = "DESTROYER";
+       shipType = "DESTROYER";
        registerCellListener(place(3));
        document.getElementById('rm2').remove();
        this.remove();
     });
     document.getElementById("place_battleship").addEventListener("click", function(e) {
-        shipType = "BATTLESHIP";
+       shipType = "BATTLESHIP";
        registerCellListener(place(4));
        document.getElementById('rm3').remove();
        this.remove();
     });
 
+    //initially hide the reset button
+    document.getElementById("reset_button").style.display = 'none';
 
     document.getElementById("start_button").addEventListener("click", function(e) {
         if(placedShips < 3)
@@ -152,8 +163,19 @@ function initGame() {
         {
             isSetup = false;
             registerCellListener((e) => {});
+            //reveal reset button
+            document.getElementById("reset_button").style.display = 'block';
+            document.getElementById("start_button").style.display = 'none';
         }
     });
+
+    document.getElementById("reset_button").addEventListener("click", function(e) {
+        if(confirm("Do you really want to reset?"))
+        {
+            window.location.reload(); //reloads the web-page
+        }
+    });
+
     sendXhr("GET", "/game", {}, function(data) {
         game = data;
     });
