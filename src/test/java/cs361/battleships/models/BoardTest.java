@@ -17,10 +17,9 @@ public class BoardTest {
     @Test
     public void testValidPlacementMultiple()
     {
-        Game g = new Game();
         Board b = new Board();
-        assertTrue(g.placeShip(new Ship("MINESWEEPER"), 3, 'C', false));
-        assertTrue(g.placeShip(new Ship("DESTROYER"), 2, 'D', false));
+        assertTrue(b.placeShip(new Ship("MINESWEEPER"), 3, 'C', false));
+        assertTrue(b.placeShip(new Ship("DESTROYER"), 2, 'D', false));
     }
 
     @Test
@@ -32,7 +31,7 @@ public class BoardTest {
     }
 
     @Test
-    public void testInvalidPlacementofSameType()
+    public void testInvalidPlacementOfSameType()
     {
         Board b = new Board();
         assertTrue(b.placeShip(new Ship("MINESWEEPER"), 6, 'F', false));
@@ -69,10 +68,23 @@ public class BoardTest {
         assertEquals(AtackStatus.INVALID, r2.getResult());
     }
 
-    /*@Test
-    public void testSonar()
+    @Test
+    public void testHitSonar()
     {
         Board b = new Board();
-        assertTrue(b.sonar(4, 'A'));
-    }*/
+        b.placeShip(new Ship("MINESWEEPER"), 4, 'B', false);
+        Result r = new Result();
+        r = b.sonar(4, 'B');
+        assertEquals(AtackStatus.HIT, r.getResult());
+    }
+
+    @Test
+    public void testMissSonar()
+    {
+        Board b = new Board();
+        b.placeShip(new Ship("MINESWEEPER"), 4, 'B', false);
+        Result r = new Result();
+        r = b.sonar(5, 'B');
+        assertEquals(AtackStatus.MISS, r.getResult());
+    }
 }
