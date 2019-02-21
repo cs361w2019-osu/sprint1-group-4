@@ -30,11 +30,15 @@ td:hover {
     background-color: black;
 }
 
+.empty {
+    background-color: gray;
+}
+
 .hit {
     background-color: orange;
 }
 
-.sink {
+.sunk {
     background-color: red;
 }
 

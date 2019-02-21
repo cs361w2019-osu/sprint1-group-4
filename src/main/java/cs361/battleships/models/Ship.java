@@ -65,6 +65,24 @@ public class Ship {
         return kind;
     }
 
+    //uses a lot of the same code for the attack function and for good reason
+    //they are very similar
+    public Result sonarHit(int x, char y)
+    {
+        var attackedLocation = new Square(x, y);
+        //gets the square the sonar hit
+        var square = getOccupiedSquares().stream().filter(s -> s.equals(attackedLocation)).findFirst();
+        if(!square.isPresent()) //if it isn't in the list just return a miss
+        {
+            return new Result(attackedLocation);
+        }
+        //otherwise return a hit
+        var attackedSquare = square.get();
+        Result result = new Result(attackedSquare);
+        result.setResult(AtackStatus.HIT);
+        return result;
+    }
+
     public Result attack(int x, char y) {
         var attackedLocation = new Square(x, y);
         var square = getOccupiedSquares().stream().filter(s -> s.equals(attackedLocation)).findFirst();
