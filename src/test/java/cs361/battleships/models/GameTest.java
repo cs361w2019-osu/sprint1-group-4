@@ -22,13 +22,6 @@ public class GameTest
     }
 
     @Test
-    public void testInvalidAttack()
-    {
-        Game g = new Game();
-        assertFalse(g.attack(12, 'A'));
-    }
-
-    @Test
     public void testSonar()
     {
         Game g = new Game();
