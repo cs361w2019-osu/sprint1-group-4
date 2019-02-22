@@ -93,7 +93,8 @@ public class Board {
 	{
 		Square s = new Square(x, y);
 		Result sonarResult = sonar(s);
-		if(!s.isOutOfBounds())
+
+		if(!s.isOutOfBounds()) //if the square being messed with is within the boundaries, do this
 		{
 			sonars.add(sonarResult);
 		}
@@ -120,7 +121,6 @@ public class Board {
 	{
 		return 0;
 	}*/
-
 
 	List<Ship> getShips() {
 		return ships;

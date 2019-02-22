@@ -191,6 +191,20 @@ function initGame() {
        document.getElementById('rm3').remove();
        this.remove();
     });
+  
+    //maybe have a counter for how many sonars are left?
+    document.getElementById("sonar_button").addEventListener("click", function(e)
+    {
+        if(sonarCount > 0) //if the users uses both sonars don't let them use it again
+        {
+            isSonar = true;
+        }
+        else
+        {
+            //tell the user they can use anymore sonars once they have used two
+            alert("You already used both of your sonars, you cannot use anymore");
+        }
+    });
 
     //maybe have a counter for how many sonars are left?
     document.getElementById("sonar_button").addEventListener("click", function(e)
