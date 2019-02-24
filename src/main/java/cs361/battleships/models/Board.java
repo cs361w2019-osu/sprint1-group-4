@@ -7,11 +7,11 @@ import java.util.List;
 
 public class Board
 {
+	final int BOARDX = 10,
+			  BOARDY = BOARDX;
 	private List<Ship> totalShips;
 	private List<Result> totalAtacks;
 	private boolean[][] boardLayout;	// for identifying occupied spaces
-	final int BOARDX = 10,
-			  BOARDY = BOARDX;
 
 	/*
 	DO NOT change the signature of this method. It is used by the grading scripts.
@@ -35,7 +35,41 @@ public class Board
 	public boolean placeShip(Ship ship, int x, char y, boolean isVertical)
 	{
 		// TODO Implement
-		Square s;
+		int xoff;
+		char yoff;
+
+		for (int i = 0; i < ship.getOccupiedSquares().size(); i++)
+		{
+			xoff = ship.getOccupiedSquares().get(i).getRow();
+			yoff = ship.getOccupiedSquares().get(i).getColumn();
+
+			if((xoff > 0 && xoff < 11) && (yoff >= 'A' && yoff <= 'J'))
+			{
+				totalShips.add(ship);
+				return true;
+			}
+		}
+		//return false;
+
+		if (totalShips.size() >= 3) {
+			return false;
+		} else if (totalShips.stream().anyMatch(s -> s.isSameShip(ship.getKind())))  {
+			return false;
+		}
+
+		final var placedShip = new Ship(ship.getKind());
+		placedShip.setOccupiedSquares(y, (char) x, isVertical);
+
+		if (totalShips.stream().anyMatch(s -> s.isOverlaping(placedShip))) {
+			return false;
+		}
+		if (placedShip.getOccupiedSquares().stream().anyMatch(s -> s.isOut())) {
+			return false;
+		}
+		totalShips.add(placedShip);
+		return true;
+
+		/*Square s;
 		int xoff;
 		char yoff;
 
@@ -49,13 +83,13 @@ public class Board
 
 		if(isVertical) {
 			for (int i = 0; i < ship.getSize(); i++) {
-				s = new Square((x + i), y);
+				//s = new Square((x + i), y);
 				if ((x + i) < 1 || (x + 1) > 10) {
 					return false;
 				} else if (getBoardLayout(x,y) == true) {
 					return false;
 				} else {
-					ship.setOccupiedSquares(s);
+					ship.setOccupiedSquares((x + i), y,true);
 					setBoardLayout(x,y,true);
 				}
 			}
@@ -68,28 +102,15 @@ public class Board
 					return false;
 				}
 				else {
-					s = new Square(x, (char)((int)y+i));
-					ship.setOccupiedSquares(s);
+					//s = new Square(x, (char)((int)y+i));
+					char yChar = (char)((int)y+i);
+					ship.setOccupiedSquares(x,yChar,false);
 					setBoardLayout(x,y,true);
 
 				}
 			}
-		}
+		}*/
 
-
-
-		for(int i = 0; i < ship.getOccupiedSquares().size(); i++)
-		{
-			xoff = ship.getOccupiedSquares().get(i).getRow();
-			yoff = ship.getOccupiedSquares().get(i).getColumn();
-
-			if((xoff > 0 && xoff < 11) && (yoff >= 'A' && yoff <= 'J'))
-			{
-				totalShips.add(ship);
-				return true;
-			}
-		}
-		return false;
 	}
 
 	/*
