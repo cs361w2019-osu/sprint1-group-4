@@ -6,8 +6,6 @@ import static org.junit.Assert.*;
 
 public class BoardTest {
 
-
-
     @Test
     public void testInvalidPlacement() {
         Board board = new Board();
