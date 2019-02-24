@@ -117,11 +117,6 @@ public class Board {
 		return sonarResult;
 	}
 
-	/*private Result sonar(Square s)
-	{
-		return 0;
-	}*/
-
 	List<Ship> getShips() {
 		return ships;
 	}
