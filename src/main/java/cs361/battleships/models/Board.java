@@ -13,7 +13,9 @@ public class Board {
 	Counter RoundCount = new Counter("Round", 100);
 	Counter BoatCount = new Counter("Boat", 3);
 
+
 	public void IncCounter() {
+
 
 		System.out.printf("Current round: " + RoundCount.value() + "\n");
 		int NewRound = RoundCount.value();
@@ -59,7 +61,10 @@ public class Board {
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
 	public Result attack(int x, char y) {
-		Result attackResult = attack(new Square(x, y));
+		int amor = 1;
+		boolean captain = false;
+		boolean amored = false;
+		Result attackResult = attack(new Square(x, y,captain,amor, amored));
 		attacks.add(attackResult);
 		return attackResult;
 	}
@@ -71,6 +76,17 @@ public class Board {
 			attackResult.setResult(AtackStatus.INVALID);
 			return attackResult;
 		}
+		/*
+		elseif (attackResult == captain quarter)
+		{
+		if attackResult == captain quarter && kind == MINESWEEP 
+		attackResult.setResult(AttackStatus.SUNK);
+
+		deductAmored();
+		}
+
+		 */
+
 		var shipsAtLocation = ships.stream().filter(ship -> ship.isAtLocation(s)).collect(Collectors.toList());
 		if (shipsAtLocation.size() == 0) {
 			var attackResult = new Result(s);
@@ -90,5 +106,3 @@ public class Board {
 		return ships;
 	}
 }
-
-
