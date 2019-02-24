@@ -29,4 +29,8 @@ public class Square {
 	public void setRow(int row) {
 		this.row = row;
 	}
+
+	public boolean isOut() {
+		return  (row < 1) || (row > 10) || (column < 'A') || (column > 'J');
+	}
 }
