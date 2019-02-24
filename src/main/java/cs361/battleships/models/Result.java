@@ -6,35 +6,23 @@ public class Result {
 	private Ship newship = new Ship();
 	private int shipCount;
 
-	public AtackStatus getResult() {
-		return this.res;
-	}
+	public AtackStatus getResult() { return this.res; }
 
-	public void setResult(AtackStatus result) {
-		this.res = result;
-	}
+	public void setResult(AtackStatus result) { this.res = result; }
 
-	public Ship getShip() {
-		return this.newship;
-	}
+	public Ship getShip() { return this.newship; }
 
 	public void setShip(Ship ship) {
 		//TODO implement
-		shipCount++;
+		setShipCount();
 		this.newship = ship;
 	}
 
-	public Square getLocation()
-	{
-		return this.s;
-	}
+	public Square getLocation() { return this.s; }
 
-	public void setLocation(Square square) {
-		this.s = square;
-	}
+	public void setLocation(Square square) { this.s = square; }
 
-	public int getShipCount()
-	{
-		return shipCount;
-	}
+	public int getShipCount() { return shipCount; }
+
+	public void setShipCount() { this.shipCount += 1; }
 }
