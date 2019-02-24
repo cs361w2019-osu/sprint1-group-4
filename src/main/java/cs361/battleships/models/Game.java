@@ -60,7 +60,5 @@ public class Game {
         return rnd.nextInt(10) + 1;
     }
 
-    private boolean randVertical() {
-        return rnd.nextBoolean();
-    }
+    private boolean randVertical() {return rnd.nextBoolean();}
 }
