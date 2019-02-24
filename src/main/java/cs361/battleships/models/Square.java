@@ -9,9 +9,11 @@ public class Square {
 	@JsonProperty private int row;
 	@JsonProperty private char column;
 	@JsonProperty private boolean hit = false;
+
 	@JsonProperty private boolean amored = false;
 	@JsonProperty private boolean captain = false;
 	public int amorStatus;
+
 
 	public Square() {
 	}
@@ -58,7 +60,6 @@ public class Square {
 	public int getAmor(){
 		return amorStatus;
 	}
-
 
 	@Override
 	public boolean equals(Object other) {

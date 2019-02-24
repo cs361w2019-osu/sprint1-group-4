@@ -36,8 +36,6 @@ public class Ship {
         }
     }
 
-
-
     public List<Square> getOccupiedSquares() {
         return occupiedSquares;
     }
@@ -56,7 +54,6 @@ public class Ship {
 
     }
 
-
     public boolean overlaps(Ship other) {
         Set<Square> thisSquares = Set.copyOf(getOccupiedSquares());
         Set<Square> otherSquares = Set.copyOf(other.getOccupiedSquares());
@@ -72,16 +69,30 @@ public class Ship {
         return kind;
     }
 
-    public Result attack(int x, char y) {
-
-    boolean isCaptain = false;
-    boolean isAmored = false;
-    int currentAmor = 1;
-
+    //uses a lot of the same code for the attack function and for good reason
+    //they are very similar
+    public Result sonarHit(int x, char y)
+    {
+        boolean isCaptain = false;
+        boolean isAmored = false;
+        int currentAmor = 1;
 
         var attackedLocation = new Square(x,y,isCaptain,currentAmor,isAmored);
+        //gets the square the sonar hit
+        var square = getOccupiedSquares().stream().filter(s -> s.equals(attackedLocation)).findFirst();
+        if(!square.isPresent()) //if it isn't in the list just return a miss
+        {
+            return new Result(attackedLocation);
+        }
+        //otherwise return a hit
+        var attackedSquare = square.get();
+        Result result = new Result(attackedSquare);
+        result.setResult(AtackStatus.HIT);
+        return result;
+    }
 
-
+    public Result attack(int x, char y) {
+        var attackedLocation = new Square(x, y);
         var square = getOccupiedSquares().stream().filter(s -> s.equals(attackedLocation)).findFirst();
         if (!square.isPresent()) {
             return new Result(attackedLocation);

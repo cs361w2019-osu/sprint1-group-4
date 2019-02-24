@@ -53,6 +53,28 @@ public class Game {
         return true;
     }
 
+    public boolean sonar(int x, char y)
+    {
+        //this could probably look better with some loops or something
+        //but i think this will do fine for now, if it was bigger I would use some loops
+        opponentsBoard.sonar(x, y);
+        opponentsBoard.sonar(x+1, y);
+        opponentsBoard.sonar(x+2, y);
+        opponentsBoard.sonar(x-1, y);
+        opponentsBoard.sonar(x-2, y);
+        opponentsBoard.sonar(x, (char)(y+1));
+        opponentsBoard.sonar(x, (char)(y+2));
+        opponentsBoard.sonar(x, (char)(y-1));
+        opponentsBoard.sonar(x, (char)(y-2));
+        opponentsBoard.sonar(x+1, (char)(y+1));
+        opponentsBoard.sonar(x+1, (char)(y-1));
+        opponentsBoard.sonar(x-1, (char)(y+1));
+        opponentsBoard.sonar(x-1, (char)(y-1));
+        return true; //always return true because we don't care if the player uses it out of bounds
+                     //or on an already clicked square
+    }
+
+
     private char randCol() {
         int random = new Random().nextInt(10);
         return (char) ('A' + random);
@@ -67,7 +89,7 @@ public class Game {
     }
 
 
-    public void GameCounter(){
+    /*public void GameCounter(){
 
         System.out.print("Enter type of counter: ");
         Scanner scanner = new Scanner(System. in);
@@ -89,7 +111,6 @@ public class Game {
             System.out.println("Current value: " + RoundCounter.value());
 
         }
-    }
+    }*/
 
 }
-

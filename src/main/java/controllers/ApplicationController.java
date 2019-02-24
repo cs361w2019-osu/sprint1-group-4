@@ -39,4 +39,17 @@ public class ApplicationController {
             return Results.badRequest();
         }
     }
+
+    //an exact copy of the attack function above because sonar pulse works the same way
+    public Result sonar(Context context, AttackGameAction g)
+    {
+        Game game = g.getGame();
+        boolean result = game.sonar(g.getActionRow(), g.getActionColumn());
+        if (result) {
+            return Results.json().render(game);
+        } else {
+            return Results.badRequest();
+        }
+    }
+
 }

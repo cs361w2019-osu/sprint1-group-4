@@ -1,21 +1,77 @@
 <#import "../layout/defaultLayout.ftl.html" as layout> 
-<@layout.myLayout "Home page">    
+<@layout.myLayout "Home page">
 
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .column {
+        float: left;
+
+        padding: 10px;
+    }
+    .left, .right {
+        width: 40%;
+    }
+    .middle {
+        width: 20%;
+    }
+
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+</style>
 
 <h1>The Battleship game</h1>
 
-<table id="opponent" class="battleGrid">
-</table>
+<!--
+    Daniel.) Addressing Issue #21
+    Added 3 column structure in divs, placing player board on the left, enemy on the right, and buttons in the center.
+-->
 
-<table id="player" class="battleGrid">
-</table>
+<div class="row">
+    <div class="column left">
+        <!-- Left Column -->
+        <table id="player" class="battleGrid"></table>
 
-<ul>
-    <li><button id="place_minesweeper">Place Minesweeper</button></li>
-    <li><button id="place_destroyer">Place Destroyer</button></li>
-    <li><button id="place_battleship">Place Battleship</button></li>
-    <li><input type="checkbox" id="is_vertical">Vertical</input></li>
-</ul>
+    </div>
+    <div class="column middle">
+        <!-- Center Column -->
+        <ul>
+            <li id="rm1">
+                <button id="place_minesweeper">Place Minesweeper</button>
+            </li>
+            <li id="rm2">
+                <button id="place_destroyer">Place Destroyer</button>
+            </li>
+            <li id="rm3">
+                <button id="place_battleship">Place Battleship</button>
+            </li>
+            <li>
+                <input type="checkbox" id="is_vertical">Vertical</input>
+            </li>
+            <li id="rm4">
+                <button id="start_button"><span class="start_reset">PLAY</span></button>
+            </li>
+            <li>
+                <button id="sonar_button">Use Sonar</button>
+            </li>
+            <li>
+                <button id="reset_button"><span class="start_reset">RESET</span></button>
+            </li>
+        </ul>
+
+    </div>
+    <div class="column right">
+        <!-- Right Column -->
+        <table id="opponent" class="battleGrid"></table>
+
+    </div>
+</div>
+
 
 <script type="text/javascript" src="/assets/game.js"></script>
 <script>

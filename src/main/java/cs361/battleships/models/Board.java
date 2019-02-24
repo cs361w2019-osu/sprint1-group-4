@@ -10,12 +10,11 @@ public class Board {
 
 	@JsonProperty private List<Ship> ships;
 	@JsonProperty private List<Result> attacks;
-	Counter RoundCount = new Counter("Round", 100);
+	@JsonProperty private  List<Result> sonars;
+	/*Counter RoundCount = new Counter("Round", 100);
 	Counter BoatCount = new Counter("Boat", 3);
 
-
 	public void IncCounter() {
-
 
 		System.out.printf("Current round: " + RoundCount.value() + "\n");
 		int NewRound = RoundCount.value();
@@ -26,13 +25,14 @@ public class Board {
 		System.out.printf("Boat round: " + BoatCount.value() + "\n");
 		BoatCount.increment();
 
-	}
+	}*/
 	/*
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
 	public Board() {
 		ships = new ArrayList<>();
 		attacks = new ArrayList<>();
+		sonars = new ArrayList<>();
 	}
 
 	/*
@@ -70,13 +70,13 @@ public class Board {
 	}
 
 	private Result attack(Square s) {
-		IncCounter();
+		//IncCounter();
 		if (attacks.stream().anyMatch(r -> r.getLocation().equals(s))) {
 			var attackResult = new Result(s);
 			attackResult.setResult(AtackStatus.INVALID);
 			return attackResult;
 		}
-		/*
+    /*
 		elseif (attackResult == captain quarter)
 		{
 		if attackResult == captain quarter && kind == MINESWEEP 
@@ -86,7 +86,6 @@ public class Board {
 		}
 
 		 */
-
 		var shipsAtLocation = ships.stream().filter(ship -> ship.isAtLocation(s)).collect(Collectors.toList());
 		if (shipsAtLocation.size() == 0) {
 			var attackResult = new Result(s);
@@ -100,6 +99,35 @@ public class Board {
 			}
 		}
 		return attackResult;
+	}
+
+	//this will be called in the Game.java file when a user clicks to attack
+	public Result sonar(int x, char y)
+	{
+		Square s = new Square(x, y);
+		Result sonarResult = sonar(s);
+
+		if(!s.isOutOfBounds()) //if the square being messed with is within the boundaries, do this
+		{
+			sonars.add(sonarResult);
+		}
+		return sonarResult;
+	}
+
+	//this is the actual logic of the sonar attack
+	private Result sonar(Square s)
+	{
+		//find the ships at the squares location
+		var shipsAtLocation = ships.stream().filter(ship -> ship.isAtLocation(s)).collect(Collectors.toList());
+		if (shipsAtLocation.size() == 0) //if you don't find a ship
+		{
+			var sonarResult = new Result(s);
+			return sonarResult;
+		}
+		//otherwise do this
+		var hitShip = shipsAtLocation.get(0);
+		var sonarResult = hitShip.sonarHit(s.getRow(), s.getColumn()); //call the sonarHit function on the ship
+		return sonarResult;
 	}
 
 	List<Ship> getShips() {
