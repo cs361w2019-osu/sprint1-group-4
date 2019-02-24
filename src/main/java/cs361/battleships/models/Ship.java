@@ -1,26 +1,46 @@
 package cs361.battleships.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.collect.Sets;
+
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 
 public class Ship {
 
     String sName;
-    int sHealth, sLength;
+    int sHealth;
 
-    @JsonProperty
-    private List<Square> occupiedSquares;
+    @JsonProperty private List<Square> occupiedSquares;
+    @JsonProperty private String kind;
+    @JsonProperty private int sLength;
 
     public Ship() {
         this.occupiedSquares = new ArrayList<>();
-        this.sLength = 0;
     }
 
     public Ship(String kind) {
-        this.sLength = 0;
-
+        this();
+        //this.sLength = sLength;
+        this.kind = kind;
+        switch(kind) {
+            case "MINESWEEPER":
+                sLength = 2;
+                sHealth = 2;
+                break;
+            case "DESTROYER":
+                sLength = 3;
+                sHealth = 3;
+                break;
+            case "BATTLESHIP":
+                sLength = 4;
+                sHealth = 4;
+                break;
+        }
+        /*
         if (kind.equals("MINESWEEPER")) {
             sName = "MINESWEEPER";
             sLength = 2;
@@ -33,8 +53,8 @@ public class Ship {
             sName = "DESTROYER";
             sLength = 3;
             sHealth = 3;
-        }
-        this.occupiedSquares = new ArrayList<>();
+        }*/
+        //this.occupiedSquares = new ArrayList<>();
     }
 
 
@@ -53,6 +73,10 @@ public class Ship {
 
     public int getsHealth() {
         return sHealth;
+    }
+
+    public String getKind() {
+        return kind;
     }
 
     public int getSize() {
@@ -77,4 +101,24 @@ public class Ship {
             }
         }
     }
+
+    //@Override
+    public boolean isSameShip(Object otherShip) {
+        var thisShip = (Ship) otherShip;
+        if (!(otherShip instanceof Ship)) {
+            return false;
+        } else if ((this.kind.equals(thisShip.kind)) && (this.sLength == thisShip.sLength) && (this.occupiedSquares.equals(thisShip.occupiedSquares))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isOverlaping(Ship otherShip) {
+        Set<Square> thisSquares = Set.copyOf(getOccupiedSquares());
+        Set<Square> otherSquares = Set.copyOf(otherShip.getOccupiedSquares());
+        Sets.SetView<Square> intersection = Sets.intersection(thisSquares, otherSquares);
+        return intersection.size() != 0;
+    }
+
 }
