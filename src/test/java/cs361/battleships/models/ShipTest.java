@@ -37,6 +37,23 @@ public class ShipTest
     }
 
     @Test
+    public void testIsAtLocation()
+    {
+        Square s = new Square(5, 'B');
+        Ship dest = new Ship("DESTROYER");
+        dest.place('A', 5, false);
+
+        assertTrue(dest.isAtLocation(s));
+    }
+
+    @Test
+    public void testGetKind()
+    {
+        Ship battle = new Ship("BATTLESHIP");
+        assertEquals(battle.getKind(), "BATTLESHIP");
+    }
+
+    @Test
     public void testHitSonarHit()
     {
         Ship mine = new Ship("MINESWEEPER");
@@ -54,5 +71,63 @@ public class ShipTest
         Result r = mine.sonarHit(5, 'A');
 
         assertEquals(AtackStatus.MISS, r.getResult());
+    }
+
+    @Test
+    public void testHitAttack()
+    {
+        Ship mine = new Ship("MINESWEEPER");
+        mine.place('A', 3, false);
+        Result r = mine.attack(3, 'A');
+        assertEquals(AtackStatus.HIT, r.getResult());
+    }
+
+    @Test
+    public void testMissAttack()
+    {
+        Ship mine = new Ship("MINESWEEPER");
+        mine.place('A', 3, false);
+        Result r = mine.attack(7, 'A');
+        assertEquals(AtackStatus.MISS, r.getResult());
+    }
+
+    @Test
+    public void testIsSunk()
+    {
+        Ship mine = new Ship("MINESWEEPER");
+        mine.place('A', 3, false);
+        Result r1 = mine.attack(3, 'A');
+        Result r2 = mine.attack(3, 'B');
+        assertEquals(AtackStatus.HIT, r1.getResult());
+        assertEquals(AtackStatus.SUNK, r2.getResult());
+    }
+
+    @Test
+    public void testMultipleSameAttack()
+    {
+        Ship mine = new Ship("MINESWEEPER");
+        mine.place('A', 3, false);
+        Result r1 = mine.attack(3, 'A');
+        Result r2 = mine.attack(3, 'A');
+        assertEquals(AtackStatus.HIT, r1.getResult());
+        assertEquals(AtackStatus.INVALID, r2.getResult());
+    }
+
+    @Test
+    public void testTrueEquals()
+    {
+        Ship mine1 = new Ship("MINESWEEPER");
+        Ship mine2 = new Ship("MINESWEEPER");
+
+        assertTrue(mine1.equals(mine2));
+    }
+
+    @Test
+    public void testFalseEquals()
+    {
+        Ship mine = new Ship("MINESWEEPER");
+        Ship dest = new Ship("DESTROYER");
+
+        assertFalse(mine.equals(dest));
     }
 }
