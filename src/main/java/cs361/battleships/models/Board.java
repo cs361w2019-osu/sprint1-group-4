@@ -93,6 +93,7 @@ public class Board {
 	{
 		Square s = new Square(x, y);
 		Result sonarResult = sonar(s);
+
 		if(!s.isOutOfBounds()) //if the square being messed with is within the boundaries, do this
 		{
 			sonars.add(sonarResult);
@@ -108,13 +109,18 @@ public class Board {
 		if (shipsAtLocation.size() == 0) //if you don't find a ship
 		{
 			var sonarResult = new Result(s);
-			return sonarResult; //return a miss
+			return sonarResult;
 		}
 		//otherwise do this
-		var hitShip = shipsAtLocation.get(0); //get the first ship in the collection
+		var hitShip = shipsAtLocation.get(0);
 		var sonarResult = hitShip.sonarHit(s.getRow(), s.getColumn()); //call the sonarHit function on the ship
-		return sonarResult; //return a hit
+		return sonarResult;
 	}
+
+	/*private Result sonar(Square s)
+	{
+		return 0;
+	}*/
 
 	List<Ship> getShips() {
 		return ships;
