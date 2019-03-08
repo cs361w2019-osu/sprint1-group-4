@@ -87,4 +87,24 @@ public class BoardTest {
         r = b.sonar(5, 'B');
         assertEquals(AtackStatus.MISS, r.getResult());
     }
+
+    @Test
+    public void testHitLaser()
+    {
+        Board b = new Board();
+        b.placeShip(new Ship("MINESWEEPER"), 4, 'B', false);
+        Result r = new Result();
+        r = b.laser(4, 'B');
+        assertEquals(AtackStatus.HIT, r.getResult());
+    }
+
+    @Test
+    public void testMissLaser()
+    {
+        Board b = new Board();
+        b.placeShip(new Ship("MINESWEEPER"), 4, 'B', false);
+        Result r = new Result();
+        r = b.laser(5, 'B');
+        assertEquals(AtackStatus.MISS, r.getResult());
+    }
 }

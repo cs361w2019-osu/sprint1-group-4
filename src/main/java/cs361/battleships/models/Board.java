@@ -10,7 +10,8 @@ public class Board {
 
 	@JsonProperty private List<Ship> ships;
 	@JsonProperty private List<Result> attacks;
-	@JsonProperty private  List<Result> sonars;
+	@JsonProperty private List<Result> sonars;
+	@JsonProperty private List<Result> laser;
 	/*Counter RoundCount = new Counter("Round", 100);
 	Counter BoatCount = new Counter("Boat", 3);
 
@@ -115,6 +116,36 @@ public class Board {
 		var hitShip = shipsAtLocation.get(0);
 		var sonarResult = hitShip.sonarHit(s.getRow(), s.getColumn()); //call the sonarHit function on the ship
 		return sonarResult;
+	}
+
+	public Result laser(int x, char y)
+	{
+		Square s = new Square(x, y);
+		Result laserResult = laser(s);
+
+		if(!s.isOutOfBounds())
+		{
+			if(!attacks.stream().anyMatch(r -> r.getLocation().equals(s)))
+			{
+				attacks.add(laserResult);
+			}
+		}
+		return laserResult;
+	}
+
+	private Result laser(Square s)
+	{
+		//find the ships at the squares location
+		var shipsAtLocation = ships.stream().filter(ship -> ship.isAtLocation(s)).collect(Collectors.toList());
+		if (shipsAtLocation.size() == 0) //if you don't find a ship
+		{
+			var laserResult = new Result(s);
+			return laserResult;
+		}
+		//otherwise do this
+		var hitShip = shipsAtLocation.get(0);
+		var laserResult = hitShip.attack(s.getRow(), s.getColumn()); //call the attack() function on the ship
+		return laserResult;
 	}
 
 	List<Ship> getShips() {

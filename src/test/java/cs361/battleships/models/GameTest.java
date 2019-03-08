@@ -27,4 +27,11 @@ public class GameTest
         Game g = new Game();
         assertTrue(g.sonar(10, 'A'));
     }
+
+    @Test
+    public void testLaser()
+    {
+        Game g = new Game();
+        assertTrue(g.laser(10, 'A'));
+    }
 }

@@ -52,4 +52,15 @@ public class ApplicationController {
         }
     }
 
+    public Result laser(Context context, AttackGameAction g)
+    {
+        Game game = g.getGame();
+        boolean result = game.laser(g.getActionRow(), g.getActionColumn());
+        if (result) {
+            return Results.json().render(game);
+        } else {
+            return Results.badRequest();
+        }
+    }
+
 }
