@@ -139,13 +139,13 @@ public class Board {
 		var shipsAtLocation = ships.stream().filter(ship -> ship.isAtLocation(s)).collect(Collectors.toList());
 		if (shipsAtLocation.size() == 0) //if you don't find a ship
 		{
-			var sonarResult = new Result(s);
-			return sonarResult;
+			var laserResult = new Result(s);
+			return laserResult;
 		}
 		//otherwise do this
 		var hitShip = shipsAtLocation.get(0);
-		var sonarResult = hitShip.sonarHit(s.getRow(), s.getColumn()); //call the sonarHit function on the ship
-		return sonarResult;
+		var laserResult = hitShip.attack(s.getRow(), s.getColumn()); //call the attack() function on the ship
+		return laserResult;
 	}
 
 	List<Ship> getShips() {

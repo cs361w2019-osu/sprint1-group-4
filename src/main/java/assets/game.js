@@ -115,12 +115,12 @@ function cellClick() {
     }
     else if(isLaser) //do laser logic
     {
-            //send the site data to the sonar function on the backend
+        //send the site data to the sonar function on the backend
         sendXhr("POST", "/laser", {game: game, x: row, y: col}, function(data) {
             game = data;
             redrawGrid();
-            isLaser = false; //set sonar flag to false so that we don't enter it again when the user clicks
-            laserCount--; //decrement sonar count so that we can keep track of how many times it has been used
+            isLaser = false; //set laser flag to false so that we don't enter it again when the user clicks
+            laserCount--; //decrement laser count so that we can keep track of how many times it has been used
         });
     }
     else //do attack logic
@@ -205,8 +205,7 @@ function initGame() {
        document.getElementById('rm3').remove();
        this.remove();
     });
-  
-    //maybe have a counter for how many sonars are left?
+
     document.getElementById("sonar_button").addEventListener("click", function(e)
     {
         if(sonarCount > 0) //if the users uses both sonars don't let them use it again
@@ -220,16 +219,15 @@ function initGame() {
         }
     });
 
-    //maybe have a counter for how many sonars are left?
     document.getElementById("laser_button").addEventListener("click", function(e)
     {
-        if(laserCount > 0) //if the users uses both sonars don't let them use it again
+        if(laserCount > 0) //if the users use the laser don't let them use it again
         {
             isLaser = true;
         }
         else
         {
-            //tell the user they can use anymore sonars once they have used two
+            //tell the user they can use anymore lasers once they have used one
             alert("You already used your space laser, you cannot use it anymore");
         }
     });
