@@ -14,6 +14,7 @@ public class Ship {
 
     @JsonProperty private String kind;
     @JsonProperty private List<Square> occupiedSquares;
+    @JsonProperty private List<Square> occupiedSubmergedSquares;
     @JsonProperty private int size;
     @JsonProperty private boolean is_sub = false; //Checks if sub.
 
@@ -34,12 +35,11 @@ public class Ship {
             case "BATTLESHIP":
                 size = 4;
                 break;
-        }/*
-		 case "SUBMARINE":
+		    case "SUBMARINE":
                 size = 4;
 				is_sub = true;
                 break;
-        }*/
+        }
     }
 
     public List<Square> getOccupiedSquares() {
@@ -47,20 +47,21 @@ public class Ship {
     }
 
     public void place(char col, int row, boolean isVertical) {
+
         for (int i=0; i<size; i++) {
             if (isVertical) {
                 occupiedSquares.add(new Square(row+i, col));
             } else {
                 occupiedSquares.add(new Square(row, (char) (col + i)));
             }
-        }/*
+        }
 		if(is_sub){
 			if (isVertical) {
-                occupiedSquares.add(new Square(row+1, col+2));
+                occupiedSquares.add(new Square(row + 1, (char) (col + 1)));
             } else {
-                occupiedSquares.add(new Square(row+1, (char) (col + 2)));
+                occupiedSquares.add(new Square(row - 1, (char) (col + 1)));
             }
-		}//end of is sub*/
+		}//end of is sub
     }
 
     public boolean overlaps(Ship other) {

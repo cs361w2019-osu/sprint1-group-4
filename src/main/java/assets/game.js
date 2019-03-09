@@ -3,6 +3,7 @@ var placedShips = 0;
 var game;
 var shipType;
 var vertical;
+var sub;
 var isSonar = false;
 var sonarCount = 2;
 
@@ -134,6 +135,16 @@ function sendXhr(method, url, data, handler) {
     req.send(JSON.stringify(data));
 }
 
+function control_sub(size){
+if (size == 5){
+        sub = true;
+    }
+    else {
+        sub = false;
+    }
+    size--;
+}
+
 function place(size) {
     return function() {
         let row = this.parentNode.rowIndex;
@@ -167,6 +178,50 @@ function place(size) {
     }
 }
 
+function place_sub(size) {
+    return function() {
+        let row = this.parentNode.rowIndex;
+        let col = this.cellIndex;
+        vertical = document.getElementById("is_vertical").checked;
+        let table = document.getElementById("player");
+        for (let i=0; i<size; i++)
+        {
+            let cell;
+            if(vertical)
+            {
+                let tableRow = table.rows[row+i];
+                if (tableRow === undefined)
+                {
+                    // ship is over the edge; let the back end deal with it
+                    break;
+                }
+                cell = tableRow.cells[col];
+            }
+            else
+            {
+                cell = table.rows[row].cells[col+i];
+            }
+            if (cell === undefined)
+            {
+                // ship is over the edge; let the back end deal with it
+                break;
+            }
+            cell.classList.toggle("submerged");
+        }
+        if(vertical){
+            let tableRow = table.rows[row+1];
+            cell = tableRow.cells[col+1];
+        }
+        else{
+            cell = table.rows[row-1].cells[col+1];
+        }
+        cell.classList.toggle("submerged");
+    }
+}
+
+
+
+
 function initGame() {
     makeGrid(document.getElementById("opponent"), false);
     makeGrid(document.getElementById("player"), true);
@@ -191,6 +246,12 @@ function initGame() {
        document.getElementById('rm3').remove();
        this.remove();
     });
+    document.getElementById("place_submarine").addEventListener("click", function(e) {
+       shipType = "SUBMARINE";
+       registerCellListener(place_sub(4));
+       document.getElementById('rm5').remove();
+       this.remove();
+     });
   
     //maybe have a counter for how many sonars are left?
     document.getElementById("sonar_button").addEventListener("click", function(e)
@@ -225,9 +286,9 @@ function initGame() {
     document.getElementById("reset_button").style.display = 'none';
 
     document.getElementById("start_button").addEventListener("click", function(e) {
-        if(placedShips < 3)
+        if(placedShips < 4)
         {
-            alert("Please place all 3 ships before starting the game");
+            alert("Please place all 4 ships before starting the game");
         }
         else
         {

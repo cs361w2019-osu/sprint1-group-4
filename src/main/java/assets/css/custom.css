@@ -25,6 +25,9 @@ td:hover {
 .placed {
     background-color: gray;
 }
+.submerged {
+    background-color: slategray;
+}
 
 .occupied {
     background-color: black;
