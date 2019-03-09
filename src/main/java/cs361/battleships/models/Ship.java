@@ -15,6 +15,8 @@ public class Ship {
     @JsonProperty private String kind;
     @JsonProperty private List<Square> occupiedSquares;
     @JsonProperty private int size;
+    @JsonProperty private boolean surface;
+
 
     public Ship() {
         occupiedSquares = new ArrayList<>();
@@ -26,12 +28,19 @@ public class Ship {
         switch(kind) {
             case "MINESWEEPER":
                 size = 2;
+                surface = true;
                 break;
             case "DESTROYER":
                 size = 3;
+                surface = true;
                 break;
             case "BATTLESHIP":
                 size = 4;
+                surface = true;
+                break;
+            case "SUBMARINE":
+                size = 4;
+                surface = false;
                 break;
         }
     }
@@ -63,6 +72,10 @@ public class Ship {
 
     public String getKind() {
         return kind;
+    }
+
+    public boolean getSurface() {
+        return surface;
     }
 
     //uses a lot of the same code for the attack function and for good reason
