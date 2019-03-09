@@ -6,8 +6,6 @@ var vertical;
 var sub;
 var isSonar = false;
 var sonarCount = 2;
-var isLaser = false;
-var laserCount = 1;
 
 function makeGrid(table, isPlayer)
 {
@@ -53,7 +51,6 @@ function markHits(board, elementId, surrenderText) {
             if(elementId === "opponent")
             {
                 document.getElementById("sonar_button").style.display = 'block';
-                document.getElementById("laser_button").style.display = 'block';
             }
         }
         else if (attack.result === "SURRENDER")
@@ -112,16 +109,6 @@ function cellClick() {
             redrawGrid();
             isSonar = false; //set sonar flag to false so that we don't enter it again when the user clicks
             sonarCount--; //decrement sonar count so that we can keep track of how many times it has been used
-        });
-    }
-    else if(isLaser) //do laser logic
-    {
-        //send the site data to the sonar function on the backend
-        sendXhr("POST", "/laser", {game: game, x: row, y: col}, function(data) {
-            game = data;
-            redrawGrid();
-            isLaser = false; //set laser flag to false so that we don't enter it again when the user clicks
-            laserCount--; //decrement laser count so that we can keep track of how many times it has been used
         });
     }
     else //do attack logic
@@ -240,7 +227,6 @@ function initGame() {
     makeGrid(document.getElementById("player"), true);
 
     document.getElementById("sonar_button").style.display = 'none';
-    document.getElementById("laser_button").style.display = 'none';
 
     document.getElementById("place_minesweeper").addEventListener("click", function(e) {
        shipType = "MINESWEEPER";
@@ -281,16 +267,17 @@ function initGame() {
         }
     });
 
-    document.getElementById("laser_button").addEventListener("click", function(e)
+    //maybe have a counter for how many sonars are left?
+    document.getElementById("sonar_button").addEventListener("click", function(e)
     {
-        if(laserCount > 0) //if the users use the laser don't let them use it again
+        if(sonarCount > 0) //if the users uses both sonars don't let them use it again
         {
-            isLaser = true;
+            isSonar = true;
         }
         else
         {
-            //tell the user they can use anymore lasers once they have used one
-            alert("You already used your space laser, you cannot use it anymore");
+            //tell the user they can use anymore sonars once they have used two
+            alert("You already used both of your sonars, you cannot use anymore");
         }
     });
 
