@@ -205,6 +205,12 @@ function initGame() {
        document.getElementById('rm3').remove();
        this.remove();
     });
+    document.getElementById("place_submarine").addEventListener("click", function(e) {
+        shipType = "SUBMARINE";
+        registerCellListener(place(4));
+        document.getElementById('rm4').remove();
+        this.remove();
+    });
 
     document.getElementById("sonar_button").addEventListener("click", function(e)
     {
@@ -237,9 +243,9 @@ function initGame() {
     document.getElementById("reset_button").style.display = 'none';
 
     document.getElementById("start_button").addEventListener("click", function(e) {
-        if(placedShips < 3)
+        if(placedShips < 4)
         {
-            alert("Please place all 3 ships before starting the game");
+            alert("Please place all 4 ships before starting the game");
         }
         else
         {
