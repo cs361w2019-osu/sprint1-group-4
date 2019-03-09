@@ -74,6 +74,20 @@ public class Game {
                      //or on an already clicked square
     }
 
+    public boolean laser(int x, char y)
+    {
+        opponentsBoard.laser(x, y);
+        opponentsBoard.laser(x+1, y);
+        opponentsBoard.laser(x-1, y);
+        opponentsBoard.laser(x, (char)(y+1));
+        opponentsBoard.laser(x, (char)(y-1));
+        opponentsBoard.laser(x+1, (char)(y+1));
+        opponentsBoard.laser(x+1, (char)(y-1));
+        opponentsBoard.laser(x-1, (char)(y+1));
+        opponentsBoard.laser(x-1, (char)(y-1));
+        return true;
+    }
+
 
     private char randCol() {
         int random = new Random().nextInt(10);
